@@ -4,7 +4,6 @@ import joblib  # For loading the serialized model
 import pandas as pd  # For data manipulation
 from flask import Flask, request, jsonify  # For creating the Flask API
 import os
-import joblib
 
 # Initialize the Flask application
 lead_prediction_api = Flask("Lead Prediction API")
