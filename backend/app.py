@@ -7,8 +7,12 @@ from flask import Flask, request, jsonify  # For creating the Flask API
 # Initialize the Flask application
 lead_prediction_api = Flask("Lead Prediction API")
 
+# Get the directory where app.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "lead_prediction_model_v1_0.joblib")
+
 # Load the trained machine learning model
-model = joblib.load("lead_prediction_model_v1_0.joblib")
+model = joblib.load(model_path)
 
 # Define a route for the home page (GET request)
 @lead_prediction_api.get('/')
