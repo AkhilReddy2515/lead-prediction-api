@@ -8,12 +8,34 @@ import os
 # Initialize the Flask application
 lead_prediction_api = Flask("Lead Prediction API")
 
-# Get the directory where app.py is located
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(BASE_DIR, "lead_prediction_model_v1_0.joblib")
+binary_cols_for_mapping = ['print_media_type1', 'print_media_type2', 'digital_media', 'educational_channels', 'referral']
+ordinal_col_for_mapping = ['profile_completed']
+
+# Define the mapping function for binary columns
+def apply_binary_mapping(df):
+    binary_mapping_dict = {'Yes': 1, 'No': 0}
+    # Create a copy to avoid SettingWithCopyWarning
+    df_copy = df.copy()
+    for col in binary_cols_for_mapping:
+        if col in df_copy.columns:
+            df_copy[col] = df_copy[col].map(binary_mapping_dict)
+    return df_copy
+
+# Define the mapping function for ordinal columns
+def apply_ordinal_mapping(df):
+    ordinal_mapping_dict = {'Low': 0, 'Medium': 1, 'High': 2}
+    df_copy = df.copy()
+    for col in ordinal_col_for_mapping:
+        if col in df_copy.columns:
+            df_copy[col] = df_copy[col].map(ordinal_mapping_dict)
+    return df_copy
 
 # Load the trained machine learning model
 model = joblib.load(model_path)
+
+# Get the directory where app.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "lead_prediction_model_v1_0.joblib")
 
 # Define a route for the home page (GET request)
 @lead_prediction_api.get('/')
