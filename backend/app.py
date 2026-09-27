@@ -35,12 +35,12 @@ def apply_ordinal_mapping(df):
 __main__.apply_binary_mapping = apply_binary_mapping
 __main__.apply_ordinal_mapping = apply_ordinal_mapping
 
-# Load the trained machine learning model
-model = joblib.load(model_path)
-
 # Get the directory where app.py is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, "lead_prediction_model_v1_0.joblib")
+
+# Load the trained machine learning model
+model = joblib.load(model_path)
 
 # Define a route for the home page (GET request)
 @lead_prediction_api.get('/')
