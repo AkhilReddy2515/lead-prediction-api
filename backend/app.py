@@ -4,6 +4,7 @@ import joblib  # For loading the serialized model
 import pandas as pd  # For data manipulation
 from flask import Flask, request, jsonify  # For creating the Flask API
 import os
+import __main__
 
 # Initialize the Flask application
 lead_prediction_api = Flask("Lead Prediction API")
@@ -29,6 +30,10 @@ def apply_ordinal_mapping(df):
         if col in df_copy.columns:
             df_copy[col] = df_copy[col].map(ordinal_mapping_dict)
     return df_copy
+
+
+__main__.apply_binary_mapping = apply_binary_mapping
+__main__.apply_ordinal_mapping = apply_ordinal_mapping
 
 # Load the trained machine learning model
 model = joblib.load(model_path)
